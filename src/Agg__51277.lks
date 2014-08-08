@@ -1,0 +1,100 @@
+//--------------------------------
+//------- Code de base -----------
+//--------------------------------
+global weaponCost = 0;
+global weaponMaxScope = 0;
+global weaponMinScope = 0;
+global myChips = [CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
+
+var myLeek = getLeek();
+
+
+                              //rest
+var enemy = getNearestEnemy();
+
+useBandage(myLeek);
+putHelmet(myLeek);
+chooseWeapon();
+move(myLeek, enemy);
+shoot(myLeek, enemy);
+useChips(myLeek, enemy);
+retreat(myLeek, enemy);
+
+function useBandage(myLeek) {
+	if (getLife(myLeek) < 100) {
+		useChip(CHIP_BANDAGE, myLeek);
+	}
+}
+
+function putHelmet(myLeek) {
+	useChip(CHIP_HELMET, myLeek);
+}
+
+function chooseWeapon() {
+	if (getWeapon() == null) {
+		var weaponId = WEAPON_DOUBLE_GUN; //WEAPON_PISTOL
+		setWeapon(weaponId);
+		weaponCost = getWeaponCost(weaponId);
+		weaponMaxScope = getWeaponMaxScope(weaponId);
+		weaponMinScope = getWeaponMinScope(weaponId);
+	}
+}
+
+function move(myLeek, enemy) {
+	var distance = getDistanceBetween(myLeek, enemy);
+	var needToMoveToMaxDistance = (distance - weaponMaxScope);
+	var needToMoveToMinDistance = (distance - weaponMinScope);
+
+	debug('needToMoveToMaxDistance' + needToMoveToMaxDistance);
+	debug('needToMoveToMinDistance' + needToMoveToMinDistance);
+
+	if (needToMoveToMaxDistance > 0) {
+		moveToward(enemy, abs(needToMoveToMaxDistance));
+	}
+	//else if (needToMoveToMaxDistance < 0 ) {
+	//moveAwayFrom(enemy, abs(needToMoveToMaxDistance));
+	//}
+	else if (needToMoveToMinDistance < 0) {
+		moveAwayFrom(enemy, abs(needToMoveToMaxDistance));
+	}
+}
+
+function retreat(myLeek, enemy) {
+	if (getMP(myLeek) > 0) {
+		moveAwayFrom(enemy);
+	}
+}
+
+function shoot(myLeek, enemy) {
+	var nbTir = floor(getTP(myLeek) / weaponCost);
+	debug('nbTir: ' + nbTir);
+	for (var i = 1; i <= nbTir; i++) {
+		useWeapon(enemy);
+		debug('useWeapon: ' + getWeaponName(getWeapon()));
+	}
+}
+
+function useChips(myLeek, enemy) {
+
+	for (var chip in myChips) {
+		var nbChipUse = floor(getTP(myLeek) / getChipCost(chip));
+		if (canUseChipOnEnemy(chip, myLeek, enemy)) {
+			debug('nbChipUse: ' + nbChipUse);
+			for (var i = 1; i <= nbChipUse; i++) {
+				useChip(chip, enemy);
+				debug('useChip' + getChipName(chip));
+			}
+		}
+	}
+}
+
+function canUseChipOnEnemy(chip, myLeek, enemy) {
+	var distance = getDistanceBetween(myLeek, enemy);
+	var result = getChipMaxScope(chip) >= distance && distance >= getChipMinScope(chip);
+	debug('canUseChipOnEnemy ' + getChipName(chip) + ' distance: ' + distance + 'maxScope:' + getChipMaxScope(chip) + ' minScope:' + getChipMinScope(chip) + ' = ' + result);
+	return result;
+}
+
+function getDistanceBetween(myLeek, enemy) {
+	return getCellDistance(getCell(myLeek), getCell(enemy));
+}
