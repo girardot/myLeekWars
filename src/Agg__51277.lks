@@ -7,9 +7,6 @@ global weaponMinScope = 0;
 global myChips = [CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
 
 var myLeek = getLeek();
-
-
-                              //rest
 var enemy = getNearestEnemy();
 
 useBandage(myLeek);
@@ -60,7 +57,7 @@ function move(myLeek, enemy) {
 }
 
 function retreat(myLeek, enemy) {
-	if (getMP(myLeek) > 0) {
+	if (getMP(myLeek) > 0 && getLife(myLeek) < 100) {
 		moveAwayFrom(enemy);
 	}
 }
