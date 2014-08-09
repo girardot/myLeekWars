@@ -61,17 +61,22 @@ function canUseShotgun(myLeek, enemy) {
     var enemyCell = getCell(enemy);
     var myLeekCell = getCell(myLeek);
 
-    var xDiff = getCellX(enemyCell) - getCellX(myLeekCell);
-    var yDiff = getCellY(enemyCell) - getCellY(myLeekCell);
+    var xDiff = abs(getCellX(enemyCell) - getCellX(myLeekCell));
+    var yDiff = abs(getCellY(enemyCell) - getCellY(myLeekCell));
+
+    debug('getCellX(enemyCell): ' + getCellX(enemyCell) + 'getCellY(enemyCell): ' + getCellY(enemyCell));
+    debug('getCellX(myLeekCell): ' + getCellX(myLeekCell) + 'getCellY(myLeekCell): ' + getCellY(myLeekCell));
+    debug('xDiff: ' + xDiff + ' yDiff:' + yDiff);
 
     var canUseShotgunResult = false;
 
-    if (xDiff = 0 && yDiff <= WEAPON_SHOTGUN_MAX_SCOPE) {
+    if (xDiff == 0 && yDiff <= WEAPON_SHOTGUN_MAX_SCOPE) {
         canUseShotgunResult = true;
     }
-    if (yDiff = 0 && xDiff <= WEAPON_SHOTGUN_MAX_SCOPE) {
+    if (yDiff == 0 && xDiff <= WEAPON_SHOTGUN_MAX_SCOPE) {
         canUseShotgunResult = true;
     }
+
     debug('canUseShotgun: ' + canUseShotgunResult);
     return canUseShotgunResult;
 }
@@ -92,18 +97,21 @@ function canUseCircleWeapon(myLeek, enemy, maxScope, minScope) {
     var enemyCell = getCell(enemy);
     var myLeekCell = getCell(myLeek);
 
-    var xDiff = getCellX(enemyCell) - getCellX(myLeekCell);
-    var yDiff = getCellY(enemyCell) - getCellY(myLeekCell);
+    var xDiff = abs(getCellX(enemyCell) - getCellX(myLeekCell));
+    var yDiff = abs(getCellY(enemyCell) - getCellY(myLeekCell));
+
+    debug('getCellX(enemyCell): ' + getCellX(enemyCell) + 'getCellY(enemyCell): ' + getCellY(enemyCell));
+    debug('getCellX(myLeekCell): ' + getCellX(myLeekCell) + 'getCellY(myLeekCell): ' + getCellY(myLeekCell));
+    debug('xDiff: ' + xDiff + ' yDiff:' + yDiff);
 
     var canUseCircleWeaponResult = false;
 
-    if (xDiff <= maxScope && yDiff <= maxScope && xDiff >= minScope && yDiff >= minScope ) {
+    if ((xDiff + yDiff ) <= maxScope && (xDiff + yDiff ) >= minScope) {
         canUseCircleWeaponResult = true;
     }
 
     return canUseCircleWeaponResult;
 }
-
 
 function equipWeapon(weaponId) {
     if (getWeapon() == null && getWeapon() != weaponId ) {
@@ -166,5 +174,8 @@ function canUseChipOnEnemy(chip, myLeek, enemy) {
 }
 
 function getDistanceBetween(myLeek, enemy) {
+    if (enemy == null || myLeek == null) {
+        return null;
+    }
     return getCellDistance(getCell(myLeek), getCell(enemy));
 }
