@@ -55,7 +55,6 @@ function chooseAdaptedWeapon(myLeek, enemy) {
     else if (canUsePistol(myLeek, enemy)) {
         equipWeapon(WEAPON_PISTOL);
     }
-
 }
 
 function canUseShotgun(myLeek, enemy) {
@@ -78,7 +77,7 @@ function canUseShotgun(myLeek, enemy) {
 }
 
 function canUseDoubleGun(myLeek, enemy) {
-    var canUseDoubleGunResult =  canUseCircleWeapon(myLeek, enemy, WEAPON_DOUBLE_GUN_MAX_SCOPE, WEAPON_DOUBLE_GUN_MIN_SCOPE);;
+    var canUseDoubleGunResult = canUseCircleWeapon(myLeek, enemy, WEAPON_DOUBLE_GUN_MAX_SCOPE, WEAPON_DOUBLE_GUN_MIN_SCOPE);
     debug('canUseDoubleGun: ' + canUseDoubleGunResult);
     return canUseDoubleGunResult;
 }
@@ -135,11 +134,13 @@ function retreat(myLeek, enemy) {
 }
 
 function shoot(myLeek, enemy) {
-    var nbTir = floor(getTP(myLeek) / cuurentWeaponCost);
-    debug('nbTir: ' + nbTir);
-    for (var i = 1; i <= nbTir; i++) {
-        useWeapon(enemy);
-        debug('useWeapon: ' + getWeaponName(getWeapon()));
+    if (getWeapon() != null) {
+        var nbTir = floor(getTP(myLeek) / cuurentWeaponCost);
+        debug('nbTir: ' + nbTir);
+        for (var i = 1; i <= nbTir; i++) {
+            useWeapon(enemy);
+            debug('useWeapon: ' + getWeaponName(getWeapon()));
+        }
     }
 }
 
