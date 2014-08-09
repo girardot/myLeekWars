@@ -2,9 +2,8 @@
 //------- Code de base -----------
 //--------------------------------
 global cuurentWeaponCost = 0;
-global WEAPON_MAX_SCOPE = 7;
+global WEAPON_MAX_SCOPE = 5;
 global WEAPON_MIN_SCOPE = 1;
-
 
 //WEAPON_DOUBLE_GUN
 global WEAPON_DOUBLE_GUN_MAX_SCOPE = 7;
@@ -18,13 +17,15 @@ global WEAPON_PISTOL_MIN_SCOPE = 1;
 global WEAPON_SHOTGUN_MAX_SCOPE = 5;
 global WEAPON_SHOTGUN_MIN_SCOPE = 1;
 
+global MIN_FLOOR_TO_USE_BANDAGE = 100;
+
 global myWeapons = [WEAPON_DOUBLE_GUN, WEAPON_PISTOL];
 global myChips = [CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
 
 var myLeek = getLeek();
 var enemy = getNearestEnemy();
 
-useBandage(myLeek);
+useBandage(myLeek, MIN_FLOOR_TO_USE_BANDAGE);
 putHelmet(myLeek);
 
 move(myLeek, enemy);
@@ -34,9 +35,10 @@ shoot(myLeek, enemy);
 
 useChips(myLeek, enemy);
 retreat(myLeek, enemy);
+useBandage(myLeek, 10000);
 
-function useBandage(myLeek) {
-    if (getLife(myLeek) < 100) {
+function useBandage(myLeek, minFloor) {
+    if (getLife(myLeek) < minFloor) {
         useChip(CHIP_BANDAGE, myLeek);
     }
 }
