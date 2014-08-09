@@ -174,7 +174,7 @@ function canUseChipOnEnemy(chip, myLeek, enemy) {
 }
 
 function getDistanceBetween(myLeek, enemy) {
-    if (enemy == null || myLeek == null) {
+    if (getCell(myLeek) == null || getCell(enemy) == null) {
         return null;
     }
     return getCellDistance(getCell(myLeek), getCell(enemy));
