@@ -116,7 +116,7 @@ function canUseCircleWeapon(myLeek, enemy, maxScope, minScope) {
 }
 
 function equipWeapon(weaponId) {
-    if (getWeapon() == null && getWeapon() != weaponId ) {
+    if (getWeapon() == null || getWeapon() != weaponId ) {
         debug("equipWeapon: " + getWeaponName(weaponId));
         setWeapon(weaponId);
         cuurentWeaponCost = getWeaponCost(weaponId);
