@@ -2,7 +2,7 @@
 //------- Code de base -----------
 //--------------------------------
 global cuurentWeaponCost = 0;
-global WEAPON_MAX_SCOPE = 5;
+global WEAPON_MAX_SCOPE = 7;
 global WEAPON_MIN_SCOPE = 1;
 
 //WEAPON_DOUBLE_GUN
