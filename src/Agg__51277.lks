@@ -25,6 +25,8 @@ global myChips = [CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
 var myLeek = getLeek();
 var enemy = getNearestEnemy();
 
+defaultWeapon();
+
 useBandage(myLeek, MIN_FLOOR_TO_USE_BANDAGE);
 putHelmet(myLeek);
 
@@ -36,6 +38,12 @@ shoot(myLeek, enemy);
 useChips(myLeek, enemy);
 retreat(myLeek, enemy);
 useBandage(myLeek, 10000);
+
+function defaultWeapon() {
+    if (getWeapon() == null) {
+        equipWeapon(WEAPON_DOUBLE_GUN);
+    }
+}
 
 function useBandage(myLeek, minFloor) {
     if (getLife(myLeek) < minFloor) {
