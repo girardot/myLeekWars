@@ -20,7 +20,7 @@ global WEAPON_SHOTGUN_MIN_SCOPE = 1;
 global MIN_FLOOR_TO_USE_BANDAGE = 100;
 
 global myWeapons = [WEAPON_DOUBLE_GUN, WEAPON_PISTOL];
-global myChips = [CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
+global attacChips = [CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
 
 var myLeek = getLeek();
 var enemy = getNearestEnemy();
@@ -29,13 +29,14 @@ defaultWeapon();
 
 useBandage(myLeek, MIN_FLOOR_TO_USE_BANDAGE);
 putHelmet(myLeek);
+useRenforcementChip(myLeek);
 
 move(myLeek, enemy);
 
 chooseAdaptedWeapon(myLeek, enemy);
 shoot(myLeek, enemy);
 
-useChips(myLeek, enemy);
+useAttacChips(myLeek, enemy);
 retreat(myLeek, enemy);
 useBandage(myLeek, 10000);
 
@@ -47,12 +48,18 @@ function defaultWeapon() {
 
 function useBandage(myLeek, minFloor) {
     if (getLife(myLeek) < minFloor) {
-        useChip(CHIP_BANDAGE, myLeek);
+        useChip(CHIP_CURE, myLeek);
     }
 }
 
 function putHelmet(myLeek) {
     useChip(CHIP_HELMET, myLeek);
+}
+
+function useRenforcementChip(myLeek) {
+    if(getTurn()%2 == 0) {
+        useChip(CHIP_PROTEIN, myLeek);
+    }
 }
 
 function chooseAdaptedWeapon(myLeek, enemy) {
@@ -162,9 +169,9 @@ function shoot(myLeek, enemy) {
     }
 }
 
-function useChips(myLeek, enemy) {
+function useAttacChips(myLeek, enemy) {
 
-    for (var chip in myChips) {
+    for (var chip in attacChips) {
         var nbChipUse = floor(getTP(myLeek) / getChipCost(chip));
         if (canUseChipOnEnemy(chip, myLeek, enemy)) {
             debug('nbChipUse: ' + nbChipUse);
