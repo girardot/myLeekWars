@@ -2,7 +2,7 @@
 //------- Code de base -----------
 //--------------------------------
 global cuurentWeaponCost = 0;
-global WEAPON_MAX_SCOPE = 7;
+global WEAPON_MAX_SCOPE = 8;
 global WEAPON_MIN_SCOPE = 1;
 
 //WEAPON_DOUBLE_GUN
@@ -16,6 +16,10 @@ global WEAPON_PISTOL_MIN_SCOPE = 1;
 //WEAPON_SHOTGUN
 global WEAPON_SHOTGUN_MAX_SCOPE = 5;
 global WEAPON_SHOTGUN_MIN_SCOPE = 1;
+
+//WEAPON_MAGNUM
+global WEAPON_MAGNUM_MAX_SCOPE = 8;
+global WEAPON_MAGNUM_MIN_SCOPE = 1;
 
 global MIN_FLOOR_TO_USE_BANDAGE = 100;
 
@@ -42,7 +46,7 @@ useBandage(myLeek, 10000);
 
 function defaultWeapon() {
     if (getWeapon() == null) {
-        equipWeapon(WEAPON_DOUBLE_GUN);
+        equipWeapon(WEAPON_MAGNUM);
     }
 }
 
@@ -66,12 +70,15 @@ function chooseAdaptedWeapon(myLeek, enemy) {
     if (canUseShotgun(myLeek, enemy)) {
         equipWeapon(WEAPON_SHOTGUN);
     }
+    else if (canUseMagnum(myLeek, enemy)) {
+        equipWeapon(WEAPON_MAGNUM);
+    }
     else if (canUseDoubleGun(myLeek, enemy)) {
         equipWeapon(WEAPON_DOUBLE_GUN);
     }
-    else if (canUsePistol(myLeek, enemy)) {
-        equipWeapon(WEAPON_PISTOL);
-    }
+//    else if (canUsePistol(myLeek, enemy)) {
+//        equipWeapon(WEAPON_PISTOL);
+//    }
 }
 
 function canUseShotgun(myLeek, enemy) {
@@ -96,6 +103,12 @@ function canUseShotgun(myLeek, enemy) {
 
     debug('canUseShotgun: ' + canUseShotgunResult);
     return canUseShotgunResult;
+}
+
+function canUseMagnum(myLeek, enemy) {
+    var canUseMagnumResult = canUseCircleWeapon(myLeek, enemy, WEAPON_MAGNUM_MAX_SCOPE, WEAPON_MAGNUM_MIN_SCOPE);
+    debug('canUseMagnum: ' + canUseMagnumResult);
+    return canUseMagnumResult;
 }
 
 function canUseDoubleGun(myLeek, enemy) {
