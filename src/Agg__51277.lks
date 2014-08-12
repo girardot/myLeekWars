@@ -1,7 +1,7 @@
 //--------------------------------
 //------- Code de base -----------
 //--------------------------------
-global cuurentWeaponCost = 0;
+global curentWeaponCost = 0;
 global WEAPON_MAX_SCOPE = 8;
 global WEAPON_MIN_SCOPE = 1;
 
@@ -111,7 +111,7 @@ function equipWeapon(weaponId) {
     if (getWeapon() == null || getWeapon() != weaponId ) {
         debug("equipWeapon: " + getWeaponName(weaponId));
         setWeapon(weaponId);
-        cuurentWeaponCost = getWeaponCost(weaponId);
+        curentWeaponCost = getWeaponCost(weaponId);
     }
 }
 
@@ -137,7 +137,7 @@ function retreat(myLeek, enemy) {
 
 function shoot(myLeek, enemy) {
     if (getWeapon() != null) {
-        var nbTir = floor(getTP(myLeek) / cuurentWeaponCost);
+        var nbTir = floor(getTP(myLeek) / curentWeaponCost);
         debug('nbTir: ' + nbTir);
         for (var i = 1; i <= nbTir; i++) {
             useWeapon(enemy);
