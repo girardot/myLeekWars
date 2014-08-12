@@ -5,22 +5,6 @@ global cuurentWeaponCost = 0;
 global WEAPON_MAX_SCOPE = 8;
 global WEAPON_MIN_SCOPE = 1;
 
-//WEAPON_DOUBLE_GUN
-global WEAPON_DOUBLE_GUN_MAX_SCOPE = 7;
-global WEAPON_DOUBLE_GUN_MIN_SCOPE = 2;
-
-//WEAPON_PISTOL
-global WEAPON_PISTOL_MAX_SCOPE = 7;
-global WEAPON_PISTOL_MIN_SCOPE = 1;
-
-//WEAPON_SHOTGUN
-global WEAPON_SHOTGUN_MAX_SCOPE = 5;
-global WEAPON_SHOTGUN_MIN_SCOPE = 1;
-
-//WEAPON_MAGNUM
-global WEAPON_MAGNUM_MAX_SCOPE = 8;
-global WEAPON_MAGNUM_MIN_SCOPE = 1;
-
 global MIN_FLOOR_TO_USE_BANDAGE = 100;
 
 global myWeapons = [WEAPON_DOUBLE_GUN, WEAPON_PISTOL];
@@ -61,27 +45,24 @@ function putHelmet(myLeek) {
 }
 
 function useRenforcementChip(myLeek) {
-    if(getTurn()%2 == 0) {
+    if (getTurn() % 2 == 0) {
         useChip(CHIP_PROTEIN, myLeek);
     }
 }
 
 function chooseAdaptedWeapon(myLeek, enemy) {
-    if (canUseShotgun(myLeek, enemy)) {
+    if (canUseDirectWeapon(myLeek, enemy, WEAPON_SHOTGUN)) {
         equipWeapon(WEAPON_SHOTGUN);
     }
-    else if (canUseMagnum(myLeek, enemy)) {
+    else if (canUseCircleWeapon(myLeek, enemy, WEAPON_MAGNUM)) {
         equipWeapon(WEAPON_MAGNUM);
     }
-    else if (canUseDoubleGun(myLeek, enemy)) {
+    else if (canUseCircleWeapon(myLeek, enemy, WEAPON_DOUBLE_GUN)) {
         equipWeapon(WEAPON_DOUBLE_GUN);
     }
-//    else if (canUsePistol(myLeek, enemy)) {
-//        equipWeapon(WEAPON_PISTOL);
-//    }
 }
 
-function canUseShotgun(myLeek, enemy) {
+function canUseDirectWeapon(myLeek, enemy, weapon) {
     var enemyCell = getCell(enemy);
     var myLeekCell = getCell(myLeek);
 
@@ -94,36 +75,18 @@ function canUseShotgun(myLeek, enemy) {
 
     var canUseShotgunResult = false;
 
-    if (xDiff == 0 && yDiff <= WEAPON_SHOTGUN_MAX_SCOPE) {
+    if (xDiff == 0 && yDiff <= getWeaponMaxScope(weapon)) {
         canUseShotgunResult = true;
     }
-    if (yDiff == 0 && xDiff <= WEAPON_SHOTGUN_MAX_SCOPE) {
+    if (yDiff == 0 && xDiff <= getWeaponMaxScope(weapon)) {
         canUseShotgunResult = true;
     }
 
-    debug('canUseShotgun: ' + canUseShotgunResult);
+    debug('canUseDirectWeapon: ' + canUseShotgunResult);
     return canUseShotgunResult;
 }
 
-function canUseMagnum(myLeek, enemy) {
-    var canUseMagnumResult = canUseCircleWeapon(myLeek, enemy, WEAPON_MAGNUM_MAX_SCOPE, WEAPON_MAGNUM_MIN_SCOPE);
-    debug('canUseMagnum: ' + canUseMagnumResult);
-    return canUseMagnumResult;
-}
-
-function canUseDoubleGun(myLeek, enemy) {
-    var canUseDoubleGunResult = canUseCircleWeapon(myLeek, enemy, WEAPON_DOUBLE_GUN_MAX_SCOPE, WEAPON_DOUBLE_GUN_MIN_SCOPE);
-    debug('canUseDoubleGun: ' + canUseDoubleGunResult);
-    return canUseDoubleGunResult;
-}
-
-function canUsePistol(myLeek, enemy) {
-    var canUsePistolResult = canUseCircleWeapon(myLeek, enemy, WEAPON_PISTOL_MAX_SCOPE, WEAPON_PISTOL_MIN_SCOPE);
-    debug('canUsePistol: ' + canUsePistolResult);
-    return canUsePistolResult;
-}
-
-function canUseCircleWeapon(myLeek, enemy, maxScope, minScope) {
+function canUseCircleWeapon(myLeek, enemy, weapon) {
     var enemyCell = getCell(enemy);
     var myLeekCell = getCell(myLeek);
 
@@ -136,10 +99,11 @@ function canUseCircleWeapon(myLeek, enemy, maxScope, minScope) {
 
     var canUseCircleWeaponResult = false;
 
-    if ((xDiff + yDiff ) <= maxScope && (xDiff + yDiff ) >= minScope) {
+    if ((xDiff + yDiff ) <= getWeaponMaxScope(weapon) && (xDiff + yDiff ) >= getWeaponMinScope(weapon)) {
         canUseCircleWeaponResult = true;
     }
 
+    debug('canUseCircleWeapon: ' + getWeaponName(weapon) + '  ' + canUseCircleWeaponResult);
     return canUseCircleWeaponResult;
 }
 
