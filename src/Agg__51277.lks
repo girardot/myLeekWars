@@ -3,11 +3,12 @@
 //--------------------------------
 global curentWeaponCost = 0;
 global WEAPON_MAX_SCOPE = 8;
-global WEAPON_MIN_SCOPE = 1;
 
 global MIN_FLOOR_TO_USE_BANDAGE = 100;
 
-global myWeapons = [WEAPON_DOUBLE_GUN, WEAPON_PISTOL];
+global myDirectWeapons = [WEAPON_SHOTGUN];
+global myCircularWeapons = [WEAPON_MAGNUM, WEAPON_DOUBLE_GUN];
+
 global attacChips = [CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
 
 var myLeek = getLeek();
@@ -51,14 +52,19 @@ function useRenforcementChip(myLeek) {
 }
 
 function chooseAdaptedWeapon(myLeek, enemy) {
-    if (canUseDirectWeapon(myLeek, enemy, WEAPON_SHOTGUN)) {
-        equipWeapon(WEAPON_SHOTGUN);
+
+    for (var directWeapon in myDirectWeapons) {
+        if (canUseDirectWeapon(myLeek, enemy, directWeapon)) {
+            equipWeapon(directWeapon);
+            return;
+        }
     }
-    else if (canUseCircleWeapon(myLeek, enemy, WEAPON_MAGNUM)) {
-        equipWeapon(WEAPON_MAGNUM);
-    }
-    else if (canUseCircleWeapon(myLeek, enemy, WEAPON_DOUBLE_GUN)) {
-        equipWeapon(WEAPON_DOUBLE_GUN);
+
+    for (var circularWeapon in myCircularWeapons) {
+        if (canUseCircleWeapon(myLeek, enemy, circularWeapon)) {
+            equipWeapon(circularWeapon);
+            return;
+        }
     }
 }
 
