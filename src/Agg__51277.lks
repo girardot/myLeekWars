@@ -6,28 +6,51 @@ global WEAPON_MAX_SCOPE = 8;
 
 global MIN_FLOOR_TO_USE_BANDAGE = 100;
 
-global myDirectWeapons = [WEAPON_SHOTGUN];
-global myCircularWeapons = [WEAPON_MAGNUM, WEAPON_DOUBLE_GUN];
+global myDirectWeapons = [WEAPON_LASER, WEAPON_SHOTGUN];
+global myCircularWeapons = [WEAPON_MAGNUM];
 
 global attacChips = [CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
+
+global MODE_DEF = 1;
+global MODE_ATT = 2;
+
+global mode = MODE_DEF;
 
 var myLeek = getLeek();
 var enemy = getNearestEnemy();
 
-defaultWeapon();
+chooseMode();
+
+if (mode == MODE_DEF) {
+    defaultWeapon();
+}
 
 useBandage(myLeek, MIN_FLOOR_TO_USE_BANDAGE);
 putHelmet(myLeek);
 useRenforcementChip(myLeek);
 
-move(myLeek, enemy);
+if (mode == MODE_DEF) {
+    move(myLeek, enemy);
+    chooseAdaptedWeapon(myLeek, enemy);
+}
+else if (mode == MODE_ATT) {
+    equipeMostPowerFullWeapon(myLeek);
+    moveToUseMostPowerFullWeapon(enemy);
+}
 
-chooseAdaptedWeapon(myLeek, enemy);
 shoot(myLeek, enemy);
 
 useAttacChips(myLeek, enemy);
 retreat(myLeek, enemy);
 useBandage(myLeek, 10000);
+
+function chooseMode() {
+    var nbTurnsToEnd = MAX_TURNS - getTurn();
+    if(nbTurnsToEnd < 10 || getLife() < 100 || getFightContext() == FIGHT_CONTEXT_TOURNAMENT) {
+        mode = MODE_ATT;
+        debug('switch to att mode');
+    }
+}
 
 function defaultWeapon() {
     if (getWeapon() == null) {
@@ -46,8 +69,8 @@ function putHelmet(myLeek) {
 }
 
 function useRenforcementChip(myLeek) {
-    if (getTurn() % 2 == 0) {
-        useChip(CHIP_PROTEIN, myLeek);
+    if (getTurn() % 4 == 0) {
+        useChip(CHIP_STEROID, myLeek);
     }
 }
 
@@ -66,6 +89,10 @@ function chooseAdaptedWeapon(myLeek, enemy) {
             return;
         }
     }
+}
+
+function equipeMostPowerFullWeapon(myLeek) {
+    equipWeapon(WEAPON_LASER);
 }
 
 function canUseDirectWeapon(myLeek, enemy, weapon) {
@@ -133,6 +160,10 @@ function move(myLeek, enemy) {
     else if (needToMoveToMaxDistance < 0) {
         moveAwayFrom(enemy, abs(needToMoveToMaxDistance));
     }
+}
+
+function moveToUseMostPowerFullWeapon(enemy) {
+    moveTowardCell(getCellToUseWeapon(enemy));
 }
 
 function retreat(myLeek, enemy) {
