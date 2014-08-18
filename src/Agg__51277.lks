@@ -46,7 +46,7 @@ useBandage(myLeek, 10000);
 
 function chooseMode() {
     var nbTurnsToEnd = MAX_TURNS - getTurn();
-    if(nbTurnsToEnd < 10 || getLife() < 100 || getFightContext() == FIGHT_CONTEXT_TOURNAMENT) {
+    if(nbTurnsToEnd < 10 || getLife() < 200 || getFightContext() == FIGHT_CONTEXT_TOURNAMENT) {
         mode = MODE_ATT;
         debug('switch to att mode');
     }
