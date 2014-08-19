@@ -33,7 +33,7 @@ if (mode == MODE_DEF) {
 }
 
 useBandage(myLeek, MIN_FLOOR_TO_USE_BANDAGE, true);
-putHelmet(myLeek);
+//putHelmet(myLeek);
 useRenforcementChip(myLeek);
 
 if (mode == MODE_DEF) {
@@ -85,7 +85,9 @@ function useBandage(myLeek, minFloor, useOnlyOne) {
 }
 
 function putHelmet(myLeek) {
-    useChip(CHIP_HELMET, myLeek);
+    if (getTurn() % 3 == 2) {
+        useChip(CHIP_HELMET, myLeek);
+    }
 }
 
 function useRenforcementChip(myLeek) {
