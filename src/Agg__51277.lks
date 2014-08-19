@@ -82,7 +82,7 @@ function putHelmet(myLeek) {
 }
 
 function useRenforcementChip(myLeek) {
-    if (getTurn() % 4 == 0) {
+    if (getTurn() % 3 == 0) {
         useChip(CHIP_STEROID, myLeek);
     }
 }
