@@ -9,7 +9,8 @@ global MIN_FLOOR_TO_USE_BANDAGE = 100;
 global myDirectWeapons = [WEAPON_LASER, WEAPON_SHOTGUN];
 global myCircularWeapons = [WEAPON_MAGNUM];
 
-global attacChips = [CHIP_FLAME, CHIP_FLASH, CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
+global attacChips = [CHIP_FLAME, CHIP_FLASH, CHIP_ICE, CHIP_SPARK];
+global bandageChips = [CHIP_CURE, CHIP_BANDAGE];
 
 global MODE_DEF = 1;
 global MODE_ATT = 2;
@@ -25,7 +26,7 @@ if (mode == MODE_DEF) {
     defaultWeapon();
 }
 
-useBandage(myLeek, MIN_FLOOR_TO_USE_BANDAGE);
+useBandage(myLeek, MIN_FLOOR_TO_USE_BANDAGE, true);
 putHelmet(myLeek);
 useRenforcementChip(myLeek);
 
@@ -42,7 +43,7 @@ shoot(myLeek, enemy);
 
 useAttacChips(myLeek, enemy);
 retreat(myLeek, enemy);
-useBandage(myLeek, 10000);
+useBandage(myLeek, 10000, false);
 
 function chooseMode() {
     var nbTurnsToEnd = MAX_TURNS - getTurn();
@@ -58,9 +59,21 @@ function defaultWeapon() {
     }
 }
 
-function useBandage(myLeek, minFloor) {
+function useBandage(myLeek, minFloor, useOnlyOne) {
     if (getLife(myLeek) < minFloor) {
-        useChip(CHIP_CURE, myLeek);
+        for (var bandageChip in bandageChips) {
+            var nbChipUse = floor(getTP(myLeek) / getChipCost(bandageChip));
+            if (canUseChip(bandageChip, myLeek)) {
+                debug('nbChipUse: ' + nbChipUse);
+                for (var i = 1; i <= nbChipUse; i++) {
+                    useChip(bandageChip, myLeek);
+                    debug('useBandageChip' + getChipName(bandageChip));
+                    if (useOnlyOne) {
+                        return;
+                    }
+                }
+            }
+        }
     }
 }
 
