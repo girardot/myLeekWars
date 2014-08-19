@@ -9,7 +9,7 @@ global MIN_FLOOR_TO_USE_BANDAGE = 100;
 global myDirectWeapons = [WEAPON_LASER, WEAPON_SHOTGUN];
 global myCircularWeapons = [WEAPON_MAGNUM];
 
-global attacChips = [CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
+global attacChips = [CHIP_FLAME, CHIP_FLASH, CHIP_ICE, CHIP_SPARK, CHIP_PEBBLE, CHIP_SHOCK];
 
 global MODE_DEF = 1;
 global MODE_ATT = 2;
@@ -46,7 +46,7 @@ useBandage(myLeek, 10000);
 
 function chooseMode() {
     var nbTurnsToEnd = MAX_TURNS - getTurn();
-    if(nbTurnsToEnd < 10 || getLife() < 200 || getFightContext() == FIGHT_CONTEXT_TOURNAMENT) {
+    if (nbTurnsToEnd < 10 || getLife() < 200 || getFightContext() == FIGHT_CONTEXT_TOURNAMENT) {
         mode = MODE_ATT;
         debug('switch to att mode');
     }
