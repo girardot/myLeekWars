@@ -1,26 +1,32 @@
 //--------------------------------
-//------- Code de base -----------
+//------------ JGT ---------------
 //--------------------------------
+global MIN_FLOOR_TO_USE_BANDAGE = 100;
+
+// my weapons
+global myDirectWeapons = [WEAPON_LASER, WEAPON_SHOTGUN];
+global myCircularWeapons = [WEAPON_MAGNUM];
 global curentWeaponCost = 0;
 global WEAPON_MAX_SCOPE = 8;
 
-global MIN_FLOOR_TO_USE_BANDAGE = 100;
-
-global myDirectWeapons = [WEAPON_LASER, WEAPON_SHOTGUN];
-global myCircularWeapons = [WEAPON_MAGNUM];
-
+// my chips
 global attacChips = [CHIP_FLAME, CHIP_FLASH, CHIP_ICE, CHIP_SPARK];
 global bandageChips = [CHIP_CURE, CHIP_BANDAGE];
 
+// mode ATT/DEF
 global MODE_DEF = 1;
 global MODE_ATT = 2;
+global NB_TURNS_TO_END_TO_ATT = 25;
+global MY_LIFE_LEVEL_TO_ATT = 150;
+global ENEMY_LIFE_LEVEL_TO_ATT = 100;
 
 global mode = MODE_DEF;
 
+//********************************************************************************************************************//
 var myLeek = getLeek();
 var enemy = getNearestEnemy();
 
-chooseMode();
+chooseMode(enemy);
 
 if (mode == MODE_DEF) {
     defaultWeapon();
@@ -45,9 +51,10 @@ useAttacChips(myLeek, enemy);
 retreat(myLeek, enemy);
 useBandage(myLeek, 10000, false);
 
-function chooseMode() {
+//********************************************************************************************************************//
+function chooseMode(enemy) {
     var nbTurnsToEnd = MAX_TURNS - getTurn();
-    if (nbTurnsToEnd < 10 || getLife() < 200 || getFightContext() == FIGHT_CONTEXT_TOURNAMENT) {
+    if (nbTurnsToEnd <= NB_TURNS_TO_END_TO_ATT || getLife() < MY_LIFE_LEVEL_TO_ATT || getLife(enemy) < ENEMY_LIFE_LEVEL_TO_ATT) {
         mode = MODE_ATT;
         debug('switch to att mode');
     }
