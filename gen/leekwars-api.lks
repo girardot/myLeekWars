@@ -51,6 +51,11 @@ global WEAPON_DESTROYER;
 global WEAPON_GAZOR;
 
 /**
+ * B-Laser. 
+ */
+global WEAPON_B_LASER;
+
+/**
  * Électriseur. 
  */
 global WEAPON_ELECTRISOR;
@@ -229,6 +234,11 @@ global CHIP_REFLEXES;
  * Dopage. 
  */
 global CHIP_DOPING;
+
+/**
+ * Téléportation. 
+ */
+global CHIP_TELEPORTATION;
 
 /**
  * Bottes de 7 lieues. 
@@ -1328,7 +1338,7 @@ function insert(array, element, position) {
 }
 
 /**
- * Détermine si un poireau <b>leek</b> est vivant. Équivant à <i>getLife(<b>leek</b>) > 0</i>.
+ * Détermine si un poireau <b>leek</b> est vivant. Équivalent à <i>getLife(<b>leek</b>) > 0</i>.
  * @param leek L'id du poireau à tester.
  * @return <i>vrai</i> si le poireau <b>leek</b> est vivant, <i>faux</i> si il est mort.
  */
@@ -1344,7 +1354,7 @@ function isAlly(leek) {
 }
 
 /**
- * Détermine si le poireau <b>leek</b> est mort. Équivant à <i>getLife(<b>leek</b>) == 0</i>.
+ * Détermine si le poireau <b>leek</b> est mort. Équivalent à <i>getLife(<b>leek</b>) == 0</i>.
  * @param leek L'id du poireau à tester.
  * @return <i>vrai</i> si le poireau <b>leek</b> est mort, <i>faux</i> si il est vivant.
  */
@@ -1352,7 +1362,7 @@ function isDead(leek) {
 }
 
 /**
- * Détermine si le tableau <b>array</b> est vide. Équivant à <i>count(<b>array</b>) == 0</i>.
+ * Détermine si le tableau <b>array</b> est vide. Équivalent à <i>count(<b>array</b>) == 0</i>.
  * @param array Le tableau à tester.
  * @return <i>vrai</i> si le tableau est vide, <i>faux</i> sinon.
  */
