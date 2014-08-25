@@ -58,6 +58,9 @@ function chooseMode(enemy) {
         mode = MODE_ATT;
         debug('switch to att mode');
     }
+    else {
+        mode = MODE_DEF;
+    }
 }
 
 function defaultWeapon() {
