@@ -7,9 +7,7 @@ global myCircularWeapons = [WEAPON_DOUBLE_GUN, WEAPON_PISTOL];
 global myDefaultWeapon = WEAPON_PISTOL;
 global mostPowerFullWeapon = WEAPON_DOUBLE_GUN;
 global curentWeaponCost = 0;
-global WEAPON_MAX_SCOPE = 8;
-
-
+global WEAPON_MAX_SCOPE = 7;
 
 // my chips
 global attacChips = [CHIP_PEBBLE, CHIP_SHOCK];
