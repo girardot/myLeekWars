@@ -6,6 +6,8 @@ global MIN_FLOOR_TO_USE_BANDAGE = 100;
 // my weapons
 global myDirectWeapons = [WEAPON_LASER];
 global myCircularWeapons = [WEAPON_GRENADE_LAUNCHER, WEAPON_MAGNUM];
+global myDefaultWeapon = WEAPON_MAGNUM;
+global mostPowerFullWeapon = WEAPON_GRENADE_LAUNCHER;
 global curentWeaponCost = 0;
 global WEAPON_MAX_SCOPE = 8;
 
@@ -65,7 +67,7 @@ function chooseMode(enemy) {
 
 function defaultWeapon() {
     if (getWeapon() == null) {
-        equipWeapon(WEAPON_MAGNUM);
+        equipWeapon(myDefaultWeapon);
     }
 }
 
@@ -118,7 +120,7 @@ function chooseAdaptedWeapon(myLeek, enemy) {
 }
 
 function equipeMostPowerFullWeapon(myLeek) {
-    equipWeapon(WEAPON_LASER);
+    equipWeapon(mostPowerFullWeapon);
 }
 
 function canUseDirectWeapon(myLeek, enemy, weapon) {
