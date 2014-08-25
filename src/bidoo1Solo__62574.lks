@@ -4,8 +4,8 @@
 global MIN_FLOOR_TO_USE_BANDAGE = 100;
 
 // my weapons
-global myDirectWeapons = [WEAPON_LASER, WEAPON_SHOTGUN];
-global myCircularWeapons = [WEAPON_MAGNUM];
+global myDirectWeapons = [WEAPON_LASER];
+global myCircularWeapons = [WEAPON_GRENADE_LAUNCHER, WEAPON_MAGNUM];
 global curentWeaponCost = 0;
 global WEAPON_MAX_SCOPE = 8;
 
